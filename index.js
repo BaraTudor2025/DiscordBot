@@ -30,4 +30,4 @@ client.on('message', function(message) {
 	}
 })
 
-bot.login(auth.token);
+client.login(auth.token);
