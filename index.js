@@ -1,53 +1,33 @@
 const discord = require("discord.js");
 const auth = require("./auth.json");
-
-const bot = new discord.Client();
+const client = new discord.Client();
 
 const bot_prefix = '=';
 
+function parse_command_message(msg){
+	if (msg.substring(0, 1) === bot_prefix) {
+		let args = msg.substring(1).split(' ');
+		return {valid: true, commnad : args[0], args: args.splice(1)};
+	}
+	else
+		return {valid: false};
+}
 
-bot.on("ready", function(evt){
+client.on("ready", function(evt){
 	console.log("start booooooooooooooooooooys");
 })
 
-bot.on('message', function(message) {
-	if (message.content.substring(0, 1) === bot_prefix) {
-		let args = message.content.substring(1).split(' ');
-		let command = args[0];
-		args = args.splice(1); // remove command (args[0])
-
-		switch(command){
-				case 'help':
-					message.channel.send("nush coaie d-astea");
-					break;
-				default:
-					message.channel.send("nush ce vrei de la viata mea :vibecheck:");
-		}
+client.on('message', function(message) {
+	let msg = parse_command_message(message.content);
+	if(!msg.valid)
+		return;
+	switch(msg.command){
+		case 'help':
+			message.channel.send("nush coaie d-astea");
+			break;
+		default:
+			message.channel.send("nush ce vrei de la viata mea :vibecheck:");
 	}
 })
 
 bot.login(auth.token);
-
-// bot.on('message', function (user, userID, channelID, message, evt) {
-//     // Our bot needs to know if it will execute a command
-//     // It will listen for messages that will start with `!`
-//     console.log(message);
-//     if (message.substring(0, 1) === bot_prefix) {
-//         var args = message.substring(1).split(' ');
-//         var cmd = args[0];
-//         args = args.splice(1);
-//         switch(cmd) {
-//             // !ping
-//             case 'ping':
-//                 bot.sendMessage({
-//                     to: channelID,
-//                     message: 'Pong!'
-//                 });
-//             break;
-//             // Just add any case commands if you want to..
-//          }
-//      }
-// });
-
-
-
