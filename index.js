@@ -1,4 +1,5 @@
 const discord = require("discord.js");
+const auth = require("./auth.json");
 
 const bot = new discord.Client();
 
@@ -25,7 +26,7 @@ bot.on('message', function(message) {
 	}
 })
 
-bot.login("NzY4OTE4NzYzNTMyODQ1MDY2.X5HdZw.g7vbgFsidOwcOtZ9q1JBOgGRtvU");
+bot.login(auth.token);
 
 // bot.on('message', function (user, userID, channelID, message, evt) {
 //     // Our bot needs to know if it will execute a command
